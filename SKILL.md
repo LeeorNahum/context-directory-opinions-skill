@@ -1,8 +1,8 @@
 ---
-name: planning-repository-opinions
-description: Opinionated structure for planning repositories: turning a folder into a durable plan with a Docs-based active plan, Title Case naming, required markdown frontmatter, one topic per file, and disciplined maintenance. Use when creating or organizing a planning repository, writing or reorganizing planning docs, or keeping a plan modular and free of drift.
+name: "planning-repository-opinions"
+description: "Opinionated structure for planning repositories: turning a folder into a durable plan with a Docs-based active plan, Title Case naming, required markdown frontmatter, one topic per file, and disciplined maintenance. Use when creating or organizing a planning repository, writing or reorganizing planning docs, or keeping a plan modular and free of drift."
 metadata:
-  author: Leeor Nahum
+  author: "Leeor Nahum"
   version: "1.0.0"
 ---
 
