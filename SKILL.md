@@ -3,7 +3,7 @@ name: "context-directory-opinions"
 description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document something for later (even vaguely), when adding plans, meeting notes, research, or reference material to a repository, or when reading or maintaining an existing Context directory and its index. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "2.0.0"
+  version: "2.1.0"
 ---
 
 # Context Directory Opinions
@@ -73,7 +73,7 @@ It regenerates the block and validates every markup file as it goes: frontmatter
 
 ## Splitting And Organization
 
-- Every file lives in a topic subdirectory. Keep the root of `Context/` free of loose files, with `AGENTS.md` as its only root-level file.
+- Prefer topic subdirectories for files. Root-level markups and assets are allowed but keep them few and overarching: a file earns the root by spanning the whole directory, like a status board or master summary, not by belonging to a topic that simply has no folder yet.
 - One topic per file. Create a new file for each durable topic instead of appending to a large note.
 - Split aggressively when a file covers areas that would naturally live apart, and combine when fragments describe one coherent topic.
 - One owner per fact. Update the owning file and link to it instead of duplicating content that can drift.
