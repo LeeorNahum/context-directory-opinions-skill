@@ -1,101 +1,94 @@
 ---
-name: "planning-repository-opinions"
-description: "Opinionated structure for planning repositories: turning a folder into a durable plan with a Docs-based active plan, Title Case naming, required markdown frontmatter, one topic per file, and disciplined maintenance. Use when creating or organizing a planning repository, writing or reorganizing planning docs, or keeping a plan modular and free of drift."
+name: "context-directory-opinions"
+description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document something for later (even vaguely), when adding plans, meeting notes, research, or reference material to a repository, or when reading or maintaining an existing Context directory and its index. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "1.0.0"
+  version: "2.0.0"
 ---
 
-# Planning Repository Opinions
+# Context Directory Opinions
 
-A planning repository holds durable thinking, notes, constraints, and context: the reasoning that does not belong inside a repo for finalized deliverables. It can live wherever a project keeps it. Keep it modular and freely reorganizable so the plan stays easy to resume as understanding improves.
+A `Context/` directory is the durable home for everything a project knows that is not code: plans, research, notes, schedules, decisions, program information, and shared memory. Humans and agents both read and write it, so every document carries a description that says when to read it, a generated index catalogs everything, and agents load only what matches the task. That is what makes many small files cheap, and many small files are the point.
 
-## Repo Shape
+## The Context Directory
 
-```text
-<planning-repo>/
-├── AGENTS.md
-├── README.md
-├── Docs/
-│   ├── <Topic>/
-│   │   ├── <Document>.md
-│   │   └── <Document>.md
-│   ├── <Topic>/
-│   │   └── <Document>.md
-│   └── <Document>.md
-└── Deprecated/          (optional; only when old material must be kept)
-    ├── <Archived Topic>/
-    │   ├── <Archived Document>.md
-    │   └── <Archived Document>.md
-    ├── <Archived Topic>/
-    │   └── <Archived Document>.md
-    └── <Archived Document>.md
-```
+- `Context/` lives at the host directory's root. The skill owns only that directory, never the host repository around it.
+- Organize freely with subdirectories and topic folders. Create, rename, split, merge, and remove them as understanding improves. No first layout is permanent.
+- `Context/AGENTS.md` holds the generated index block and nothing else needs to live there, though human content around the block is preserved. It is the only `AGENTS.md` anywhere in the directory. It and this skill cross-reference each other: read either one and the whole system is known.
+- An optional `Deprecated/` subdirectory preserves superseded material. Treat its contents as non-guidance unless the user explicitly asks for history.
 
-`README.md` owns project purpose, strategy, scope, and human-readable context. `Docs/` holds the active plan. Topic folders under `Docs/` should be created, renamed, split, merged, or removed as the plan evolves.
+## Reading Discipline
 
-Planning is encouraged to be broad. It can have many folders, subfolders, and markdown files when the project needs them. For non-trivial plans, default to topic folders under `Docs/` instead of loose top-level docs. The constraint is not the number of files; it is whether each file has a clear purpose, stays concise, and avoids duplicating facts that can drift.
+Read `Context/AGENTS.md` first. Each index entry's description says when to read that file. Load the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free.
 
-## Docs Is The Active Plan
+## File Formats
 
-`Docs/` is the active plan. Do not add a wrapper folder inside it.
+Markdown and HTML are interchangeable markup. Size and content decide which to use, and converting between them when splitting or combining is normal.
 
-Do not put planning markdown in the repo root beyond `AGENTS.md` and `README.md`.
-
-`Deprecated/` is a sibling of `Docs/`, not nested inside it. Add it only when superseded material must be preserved for reference. Treat `Deprecated/` as non-guidance and ignore it for implementation unless the user explicitly asks for historical context.
-
-Create topic folders and subfolders that will have real files now, but do not treat the first folder layout as permanent. Planning should always be freely reorganized as understanding improves. Rename, split, merge, or remove folders as the plan evolves.
-
-## Naming
-
-Use [Title Case](https://en.wikipedia.org/wiki/Title_case) for planning folder and markdown filenames. Capitalize the principal words, including the first and last. Articles (`a`, `an`, `the`), short prepositions, and common conjunctions are lowercase unless first or last.
-
-Do not use lowercase folder names, kebab-case filenames, or snake_case filenames unless an external tool requires it.
-
-Keep folders and filenames descriptive rather than treating any initial category set as sacred.
+- A markdown file must stay concise, roughly 100 lines with less being better. The moment it outgrows a glance or needs visuals beyond an embedded image or Mermaid diagram, convert it to HTML.
+- Choose HTML deliberately and often. A short markdown file at a glance equals a medium HTML page at a glance, so in a healthy Context directory roughly half the documents end up as HTML. Markdown wins for agent ingestion, and HTML wins the moment a human cannot comfortably read the markdown.
+- HTML files are self-contained: inline CSS and JS, no external dependencies.
+- Use Mermaid inside markdown whenever a diagram helps: timelines, flows, relationships, schedules. Do not create standalone `.mmd` files, since they cannot carry frontmatter and would be reduced to a description-less asset entry, invisible to selection. A diagram that outgrows Mermaid becomes an HTML page.
+- Images (PNG, SVG, JPG) and PDFs belong in `Context/` too, placed in the topic folder they support. They carry no frontmatter, and the index lists every non-markup file by path without a description.
 
 ## Frontmatter
 
-Every planning markdown file starts with YAML frontmatter:
+Every markdown and HTML file starts with the same contract. Markdown uses YAML frontmatter:
 
 ```yaml
 ---
 name: <Title Case Document Name>
-description: <one-line sentence describing the file>
+description: <one line saying what the file holds and when to read it>
 date_created: YYYY-MM-DD
 date_modified: YYYY-MM-DD
 ---
 ```
 
-The `description` value is a single sentence on one line. Keep frontmatter in sync with the file:
+HTML has no native frontmatter, so the file starts with the identical block inside an HTML comment:
 
-- `name` matches the current document name
-- `description` matches the current purpose of the file
-- `date_created` stays fixed after the file is created
-- `date_modified` updates whenever the file content changes
+```html
+<!--
+name: <Title Case Document Name>
+description: <one line saying what the file holds and when to read it>
+date_created: YYYY-MM-DD
+date_modified: YYYY-MM-DD
+-->
+```
 
-## One Topic Per File
+Descriptions are written for a deciding agent: they state what the file holds and when to read it, on one line of at most 1024 characters, high-signal, never the content itself. A rule that lives only in a description is invisible once the file is opened, so descriptions select and bodies inform.
 
-Prefer more markdown files over fewer combined files.
+Keep frontmatter in sync: `name` matches the current document name, `description` matches the current purpose, `date_created` never changes, and `date_modified` updates with every content change.
 
-For non-trivial planning repos, prefer `Docs/<Topic>/<Document>.md` over `Docs/<Document>.md`. Loose files directly under `Docs/` are acceptable only for tiny plans with one or two active documents, or for a temporary index that clearly earns its place.
+## The Index
 
-- Create a new file when a topic is distinct enough to implement, review, or update on its own.
-- Create a new file for a new durable topic instead of appending everything to one large note.
-- Do not combine unrelated topics into one file just to reduce file count.
-- Split when a file covers multiple implementation areas that would naturally live in different folders.
-- Keep a file together only when the content is one coherent topic with no meaningful split point.
-- Use descriptive file names that say what the file is about.
+`Context/AGENTS.md` holds a managed block listing every file's name, path, modified date, and description, with assets listed by path. The block is generated, guard-delimited, idempotent, and never placed in the host repository's root `AGENTS.md`. Human content in `Context/AGENTS.md` outside the block is preserved.
 
-## Maintenance
+Run the generator after any bulk change:
 
-- Keep documentation modular and purposeful.
-- Move, rename, split, merge, and recategorize when structure drifts.
-- Remove stale or duplicated facts instead of preserving them forever.
-- Do not duplicate the same factual content in multiple files; update the owning file and link instead.
+```bash
+node <skill-root>/scripts/index.mjs <path-to-Context>
+```
 
-Avoid turning planning into a dumping ground. Modularity should make the project easier to resume, not harder to navigate. Clean or prune stale, redundant, or miscategorized notes instead of preserving them out of inertia.
+It regenerates the block and validates every markup file as it goes: frontmatter present and fully parseable, `name` and `description` set, description within its limits, and both dates real YYYY-MM-DD dates. Deprecated entries render under their own non-guidance heading. Files with broken frontmatter still appear in the index under an unindexed section so they surface instead of vanishing, and the run exits non-zero until they are fixed. The script refuses a target directory not named `Context` unless forced, so the block cannot land in a host repository's root `AGENTS.md` by accident.
 
-## Planning AGENTS.md
+## Splitting And Organization
 
-For a non-trivial planning repo, add or update its `AGENTS.md`. It should explain how the repo is organized, which files own durable facts, and how future agents keep it clean and avoid duplication or knowledge drift as the project changes.
+- Every file lives in a topic subdirectory. Keep the root of `Context/` free of loose files, with `AGENTS.md` as its only root-level file.
+- One topic per file. Create a new file for each durable topic instead of appending to a large note.
+- Split aggressively when a file covers areas that would naturally live apart, and combine when fragments describe one coherent topic.
+- One owner per fact. Update the owning file and link to it instead of duplicating content that can drift.
+- Move, rename, and recategorize whenever structure drifts. Prune stale or duplicated material instead of preserving it out of inertia, or move it to `Deprecated/` when it must be kept.
+
+## Naming
+
+- Title Case for folders and markup filenames. Capitalize principal words, lowercase articles and short prepositions unless first or last.
+- Prefix time-anchored artifacts (meetings, snapshots, dated events) with `YYYY-MM-DD ` so they sort chronologically. Evergreen topic files take no date prefix.
+- Keep names descriptive of content, never of temporary process.
+
+## Validation
+
+Before finishing any session that touched `Context/`:
+
+- Run the generator (see The Index) and fix every error it reports.
+- Confirm each edited file's frontmatter is in sync (see Frontmatter).
+- Confirm nothing was duplicated that an existing file already owns.
