@@ -2,7 +2,7 @@
 
 `context-directory-opinions` gives any project a `Context/` directory: the durable home for plans, research, notes, schedules, and shared memory as markup.
 
-Every markdown and HTML file carries frontmatter with a description that says when to read it, and a generated index in `Context/AGENTS.md` catalogs everything, so agents load only what matches the task and files stay many, small, and organized. Markdown and HTML are treated as interchangeable markup, with Mermaid for diagrams and images and PDFs alongside.
+Every markdown and HTML file carries frontmatter with a description that says when to read it, and a generated index in `Context/AGENTS.md` catalogs everything, so agents load only what matches the task and files stay many, small, and organized. Markdown stays short and linear. HTML is chosen when a compact human review layout, navigation, comparison, or repeated structure materially improves readability.
 
 The design deliberately mirrors how Agent Skills themselves work: each document's description is a trigger read in isolation, the index is the catalog, and loading is selective. That parallel is why splitting into many small files costs nothing here.
 
