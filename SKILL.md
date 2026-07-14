@@ -3,7 +3,7 @@ name: "context-directory-opinions"
 description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document project material for later (even vaguely), never for personal reminders or in-chat preferences, when adding plans, meeting notes, research, or reference material to a repository, or when reading or maintaining an existing Context directory and its index. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "2.2.0"
+  version: "2.2.1"
 ---
 
 # Context Directory Opinions
@@ -20,6 +20,8 @@ A `Context/` directory is the durable home for everything a project knows that i
 ## Reading Discipline
 
 Read `Context/AGENTS.md` first. Each index entry's description says when to read that file. Load the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free.
+
+A request to refresh, clean up, reorganize, audit, or normalize `Context/` is whole-directory maintenance. Read every indexed markup file for that task. Check topic ownership, duplication, stale claims, naming, frontmatter, Markdown-versus-HTML choice, scan length, navigation, and whether the current folder structure still matches the material. Regenerating the index and passing frontmatter validation are necessary checks, not evidence that the editorial audit is complete. Report which documents were inspected, what changed, and why any over-tripwire Markdown files remained Markdown.
 
 ## File Formats
 
