@@ -1,6 +1,6 @@
 # context-directory-opinions-skill
 
-`context-directory-opinions` gives any project a `Context/` directory: the durable home for plans, research, notes, schedules, and shared memory as markup. An optional sibling `Temp-Context/` holds user dumps and short-lived staging. Agents prefer asking how to handle those files, then extract or move everything into `Context/` and remove the empty temp folder.
+`context-directory-opinions` gives any project a `Context/` directory: the durable home for plans, research, notes, schedules, and shared memory as markup. An optional sibling `Temp-Context/` holds user dumps and short-lived staging. Agents drain it into `Context/` and remove the empty temp folder.
 
 Every markdown and HTML file carries frontmatter with a description that says when to read it, and a generated index in `Context/AGENTS.md` catalogs everything, so agents load only what matches the task and files stay many, small, and organized. Markdown stays short and linear. HTML is chosen when a compact human review layout, navigation, comparison, or repeated structure materially improves readability.
 

@@ -3,7 +3,7 @@ name: "context-directory-opinions"
 description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document project material for later (even vaguely), never for personal reminders or in-chat preferences, when adding plans, meeting notes, research, or reference material to a repository, when reading or maintaining an existing Context directory and its index, or whenever a Temp-Context directory exists and needs draining into Context. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "2.3.0"
+  version: "2.3.1"
 ---
 
 # Context Directory Opinions
@@ -16,30 +16,22 @@ A `Context/` directory is the durable home for everything a project knows that i
 - Organize freely with subdirectories and topic folders. Create, rename, split, merge, and remove them as understanding improves. No first layout is permanent.
 - `Context/AGENTS.md` holds the generated index block and nothing else needs to live there, though human content around the block is preserved. It is the only `AGENTS.md` anywhere in the directory. It and this skill cross-reference each other: read either one and the whole system is known.
 - An optional `Deprecated/` subdirectory preserves superseded material. Treat its contents as non-guidance unless the user explicitly asks for history.
-- `Temp-Context/` is an optional sibling of `Context/` at the same host root. Humans create it for dumps. Agents may use it as a short-lived staging area while sorting. It is never durable storage and must not remain after its contents are handled.
 
 ## Temp-Context Drain
 
-If `Temp-Context/` exists at the host root, draining it is part of the agent's job for this skill. Prefer asking the user what to do with each dump or file before acting. When the user already directed the material, or a clear disposition is obvious from the request, proceed without blocking.
+`Temp-Context/` is an optional user-created directory at the host directory's root. It can hold a context dump awaiting organization, and an agent can use it as temporary organizing state while processing that material. It is staging, not durable storage.
 
-For every item in `Temp-Context/`:
+Whenever `Temp-Context/` exists, inspect every item and drain everything relevant into `Context/`:
 
-- Extract durable facts into the owning `Context/` markup files (create or update with normal frontmatter, naming, and topic ownership).
-- Move a file into `Context/` intact when it is already suitable markup or an asset worth keeping (image, PDF, or similar), then place it under the right topic folder.
+- Extract durable information into the appropriate new or existing markup files.
+- Move an item directly into the right topic folder when it can be kept as-is or is an asset worth preserving.
 - Discard only what the user says to drop, or what is clearly disposable staging noise after extraction.
 
-The agent may use `Temp-Context/` as a temporary organizing workspace mid-task. That does not change the completion bar.
-
-Completion requires both:
-
-1. Every durable fact or keepable file has left `Temp-Context/` into `Context/` (extracted, moved, or discarded per above).
-2. `Temp-Context/` is empty, then the empty directory is removed from the filesystem. Do not leave a blank `Temp-Context/` behind.
-
-After a drain that changed `Context/`, run the index generator (see The Index) and finish the usual Validation checks.
+The drain is complete only when every item has had its relevant information extracted, has itself been moved into `Context/`, or has been discarded per above. Finish the resulting `Context/` work normally, including organization and validation, then remove the empty `Temp-Context/` directory so neither its contents nor the blank staging directory remain.
 
 ## Reading Discipline
 
-Read `Context/AGENTS.md` first. Each index entry's description says when to read that file. Load the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free. When `Temp-Context/` is present, treat draining it as in-scope work for this skill (see Temp-Context Drain), not as optional cleanup.
+Read `Context/AGENTS.md` first. Each index entry's description says when to read that file. Load the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free. If `Temp-Context/` is present at the host root, drain it (see Temp-Context Drain).
 
 A request to refresh, clean up, reorganize, audit, or normalize `Context/` is whole-directory maintenance. Read every indexed markup file for that task. Check topic ownership, duplication, stale claims, naming, frontmatter, Markdown-versus-HTML choice, scan length, navigation, and whether the current folder structure still matches the material. Regenerating the index and passing frontmatter validation are necessary checks, not evidence that the editorial audit is complete. Report which documents were inspected, what changed, and why any over-tripwire Markdown files remained Markdown.
 
