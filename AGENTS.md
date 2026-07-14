@@ -4,11 +4,12 @@ Rules for editing the **context-directory-opinions** skill. User-facing guidance
 
 ## File roles
 
-| File | Edited by | Role |
-| --- | --- | --- |
-| `SKILL.md` | Hand | The Context directory contract: formats, frontmatter, index, organization, naming |
-| `scripts/index.mjs` | Hand | Regenerates the managed index block in a Context directory's AGENTS.md and validates frontmatter |
-| `README.md` | Hand | Short human summary |
+| File | Role |
+| --- | --- |
+| `SKILL.md` | The Context directory contract: formats, frontmatter, index, organization, naming |
+| `scripts/index.mjs` | Regenerates the managed index block in a Context directory's AGENTS.md and validates frontmatter |
+| `README.md` | Short human summary |
+| `AGENTS.md` | Maintenance contract for editing this skill |
 
 One owner per concern. The generated index block lives in each consuming project's `Context/AGENTS.md`, never in this repository.
 
