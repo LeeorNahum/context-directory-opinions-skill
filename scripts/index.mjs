@@ -4,8 +4,8 @@
 //
 // Usage: node scripts/index.mjs <path-to-Context>
 //
-// The block is guard-delimited and idempotent. Human content in AGENTS.md
-// outside the block is preserved. Markup files with broken frontmatter are
+// The block is guard-delimited and idempotent. Content in AGENTS.md outside
+// the block is preserved. Markup files with broken frontmatter are
 // listed in an unindexed section so they surface instead of vanishing, and
 // the run exits 1 until they are fixed.
 
@@ -127,7 +127,7 @@ const lines = [
   "",
   "# Context Index",
   "",
-  "Follow the `context-directory-opinions` skill when working in this directory, and regenerate this index after any change here. Each description below is the trigger: read the files whose descriptions match the task.",
+  "Read `Context/AGENTS.md` before working in this directory. Follow any durable project instructions outside this generated block, use each description below as the trigger for what to read, and regenerate the index after any change.",
 ];
 const entry = (d) => {
   lines.push("", `### [${d.name}](<${d.rel}>) (Modified ${d.date_modified})`, "");

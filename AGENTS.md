@@ -21,12 +21,15 @@ One owner per concern. The generated index block lives in each consuming project
 - Capitalized bullets and parallel list voice.
 - Positive rules. Describe the category of mistake instead of preserving bad examples.
 - Placeholders only. This meta skill must not name real projects, repos, or people beyond its own metadata.
-- Keep `scripts/index.mjs` zero-dependency and runnable with plain `node`. Its output must stay idempotent, and human content outside the managed block is never touched.
+- Keep `scripts/index.mjs` zero-dependency and runnable with plain `node`. Its output must stay idempotent, and content outside the managed block is never touched.
+- Keep durable project instructions rare, structural, and project-owned. Do not promote one consuming project's folder convention, task status, names, or temporary decisions into this meta skill.
+- Changes to the generated introductory sentence are compatible when the guard strings and replacement boundaries stay unchanged.
 - The guard comments and block format in `scripts/index.mjs` are a compatibility surface. Changing them orphans every existing generated block, so change them only with a major version bump and a migration note.
 
 ## Before finishing
 
 - `node scripts/index.mjs --help` and a run against a scratch Context directory both behave.
+- Run the generator twice against the scratch directory and confirm the second run is byte-identical.
 - Every support file named by `SKILL.md` exists and has a direct usage condition.
 - Bullets stay capitalized, with no em dashes and no joiner semicolons introduced.
 - `metadata.version` bumped if and only if authored behavior changed.

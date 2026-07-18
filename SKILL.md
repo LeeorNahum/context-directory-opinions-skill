@@ -3,7 +3,7 @@ name: "context-directory-opinions"
 description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document project material for later (even vaguely), never for personal reminders or in-chat preferences, when adding plans, meeting notes, research, or reference material to a repository, when reading or maintaining an existing Context directory and its index, or whenever a Temp-Context directory exists and needs draining into Context. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "2.3.1"
+  version: "2.4.0"
 ---
 
 # Context Directory Opinions
@@ -13,8 +13,9 @@ A `Context/` directory is the durable home for everything a project knows that i
 ## The Context Directory
 
 - `Context/` lives at the host directory's root. The skill owns only that directory, never the host repository around it.
-- Organize freely with subdirectories and topic folders. Create, rename, split, merge, and remove them as understanding improves. No first layout is permanent.
-- `Context/AGENTS.md` holds the generated index block and nothing else needs to live there, though human content around the block is preserved. It is the only `AGENTS.md` anywhere in the directory. It and this skill cross-reference each other: read either one and the whole system is known.
+- Organize freely with subdirectories and topic folders. Create, rename, split, merge, and remove them as understanding improves. No first layout is permanent, and the current layout is evidence rather than a universal schema. Malleability is the default.
+- `Context/AGENTS.md` holds the generated index block and may also contain concise durable project instructions outside the guards. Read it first, preserve content outside the generated block, and add an instruction only when a structural rule truly needs to remain stable across future work.
+- Keep durable instructions rare and structural. Project facts, current status, temporary decisions, and inventories of the present folder tree belong in indexed topical documents instead.
 - An optional `Deprecated/` subdirectory preserves superseded material. Treat its contents as non-guidance unless the user explicitly asks for history.
 
 ## Temp-Context Drain
@@ -31,7 +32,7 @@ The drain is complete only when every item has had its relevant information extr
 
 ## Reading Discipline
 
-Read `Context/AGENTS.md` first. Each index entry's description says when to read that file. Load the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free. If `Temp-Context/` is present at the host root, drain it (see Temp-Context Drain).
+Read `Context/AGENTS.md` first. Follow any durable project instructions outside the generated guards, then use each index entry's description to decide what to load. Read the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free. If `Temp-Context/` is present at the host root, drain it (see Temp-Context Drain).
 
 A request to refresh, clean up, reorganize, audit, or normalize `Context/` is whole-directory maintenance. Read every indexed markup file for that task. Check topic ownership, duplication, stale claims, naming, frontmatter, Markdown-versus-HTML choice, scan length, navigation, and whether the current folder structure still matches the material. Regenerating the index and passing frontmatter validation are necessary checks, not evidence that the editorial audit is complete. Report which documents were inspected, what changed, and why any over-tripwire Markdown files remained Markdown.
 
@@ -79,9 +80,9 @@ Keep frontmatter in sync: `name` matches the current document name, `description
 
 ## The Index
 
-`Context/AGENTS.md` holds a managed block listing every file's name, path, modified date, and description, with assets listed by path. The block is generated, guard-delimited, idempotent, and never placed in the host repository's root `AGENTS.md`. Human content in `Context/AGENTS.md` outside the block is preserved.
+`Context/AGENTS.md` holds a managed block listing every file's name, path, modified date, and description, with assets listed by path. The block is generated, guard-delimited, idempotent, and never placed in the host repository's root `AGENTS.md`. Content outside the block is preserved exactly.
 
-Run the generator after any bulk change:
+Run the generator after any change to `Context/`:
 
 ```bash
 node <skill-root>/scripts/index.mjs <path-to-Context>
@@ -95,6 +96,7 @@ It regenerates the block and validates every markup file as it goes: frontmatter
 - One topic per file. Create a new file for each durable topic instead of appending to a large note.
 - Split aggressively when a file covers areas that would naturally live apart, and combine when fragments describe one coherent topic.
 - One owner per fact. Update the owning file and link to it instead of duplicating content that can drift.
+- Before retiring a mixed document, map each unique fact to its intended owner, update inbound links, and verify that no durable information disappeared.
 - Move, rename, and recategorize whenever structure drifts. Prune stale or duplicated material instead of preserving it out of inertia, or move it to `Deprecated/` when it must be kept.
 
 ## Naming
