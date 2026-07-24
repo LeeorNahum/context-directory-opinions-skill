@@ -3,113 +3,110 @@ name: "context-directory-opinions"
 description: "Opinionated structure for a Context directory: the durable home for a project's plans, research, notes, schedules, program info, and shared memory as markup. Use when creating, saving, organizing, or reorganizing any durable documentation or planning material, when the user says to save, note, remember, capture, or document project material for later (even vaguely), never for personal reminders or in-chat preferences, when adding plans, meeting notes, research, or reference material to a repository, when reading or maintaining an existing Context directory and its index, or whenever a Temp-Context directory exists and needs draining into Context. Not for code documentation, READMEs, or comments that live with the source."
 metadata:
   author: "Leeor Nahum"
-  version: "2.4.0"
+  version: "2.5.0"
 ---
 
 # Context Directory Opinions
 
-A `Context/` directory is the durable home for everything a project knows that is not code: plans, research, notes, schedules, decisions, program information, and shared memory. Humans and agents both read and write it, so every document carries a description that says when to read it, a generated index catalogs everything, and agents load only what matches the task. That is what makes many small files cheap, and many small files are the point.
+`Context/` is the durable home for what a project knows that is not code: plans, research, decisions, rationale, status, schedules, references, and shared memory. It is project knowledge, not a second instruction hierarchy.
 
-## The Context Directory
+Topical documents state facts, opinions, constraints, decisions, and plans directly. Rules that govern how an agent works across tasks belong in the nearest applicable `AGENTS.md`. A plan, checklist, decision, or runbook may still contain instructions when those instructions are the subject of the document.
 
-- `Context/` lives at the host directory's root. The skill owns only that directory, never the host repository around it.
-- Organize freely with subdirectories and topic folders. Create, rename, split, merge, and remove them as understanding improves. No first layout is permanent, and the current layout is evidence rather than a universal schema. Malleability is the default.
-- `Context/AGENTS.md` holds the generated index block and may also contain concise durable project instructions outside the guards. Read it first, preserve content outside the generated block, and add an instruction only when a structural rule truly needs to remain stable across future work.
-- Keep durable instructions rare and structural. Project facts, current status, temporary decisions, and inventories of the present folder tree belong in indexed topical documents instead.
-- An optional `Deprecated/` subdirectory preserves superseded material. Treat its contents as non-guidance unless the user explicitly asks for history.
+## Core Structure
 
-## Temp-Context Drain
+- `Context/` lives at the repository root. The skill owns only that directory.
+- `Context/AGENTS.md` contains the generated active index and may carry a few Context-specific structural rules outside the generated guards.
+- Organize by the project's real subjects. Rename, split, merge, move, and retire material when ownership or reading needs change.
+- Three or four levels of meaningful subdirectories are healthy. Avoid keeping files together merely because the first folder layout already exists.
+- Root-level files are reserved for project-wide owners such as current status or a master plan.
+- One current fact has one owner. Other documents link to it.
 
-`Temp-Context/` is an optional user-created directory at the host directory's root. It can hold a context dump awaiting organization, and an agent can use it as temporary organizing state while processing that material. It is staging, not durable storage.
+## Directory Density
 
-Whenever `Temp-Context/` exists, inspect every item and drain everything relevant into `Context/`:
+Aim for roughly 4 to 12 active markup files in a directory. More than 12 triggers an organization review. More than 20 means the directory needs clearer subtopics unless it is an intentional chronological or generated collection.
 
-- Extract durable information into the appropriate new or existing markup files.
-- Move an item directly into the right topic folder when it can be kept as-is or is an asset worth preserving.
-- Discard only what the user says to drop, or what is clearly disposable staging noise after extraction.
+Create subdirectories around stable subjects, not arbitrary batches. Good folder names explain why the files change together. Avoid catch-all folders such as `Misc`, numbered buckets, or one-child nesting that adds no meaning.
 
-The drain is complete only when every item has had its relevant information extracted, has itself been moved into `Context/`, or has been discarded per above. Finish the resulting `Context/` work normally, including organization and validation, then remove the empty `Temp-Context/` directory so neither its contents nor the blank staging directory remain.
+When a directory grows:
+
+- Group files by domain, lifecycle, audience, or artifact type
+- Move current owners before historical references
+- Combine fragments that change together
+- Split files whose sections change independently
+- Update links and the generated index in the same pass
+
+## Archive
+
+`Context/Archive/` preserves superseded, completed, or fully synthesized material that remains useful for provenance but is not current guidance. It is omitted from normal indexing. Archive is not a trash folder: delete noise and exact duplicates, and transfer every still-current fact or opinion before moving a mixed document.
+
+Reconsider archival status when a phase closes, a decision is superseded, a one-time runbook is completed, a source is fully synthesized, or a newer owner absorbs the material.
+
+## Temp-Context
+
+`Temp-Context/` is optional staging for a user dump or an in-progress organization pass. Inspect every item, move current knowledge into its active owner, preserve worthwhile history in Archive, discard only clear noise, then remove the empty staging directory.
 
 ## Reading Discipline
 
-Read `Context/AGENTS.md` first. Follow any durable project instructions outside the generated guards, then use each index entry's description to decide what to load. Read the files whose descriptions match the task and nothing else. Never assume the folder must be read in full, and never avoid creating a new file to keep the folder "small enough to read". The index makes size free. If `Temp-Context/` is present at the host root, drain it (see Temp-Context Drain).
+Read `Context/AGENTS.md` first, then load only the active documents whose names and descriptions match the task. Search within the relevant topic when more than one owner is plausible.
 
-A request to refresh, clean up, reorganize, audit, or normalize `Context/` is whole-directory maintenance. Read every indexed markup file for that task. Check topic ownership, duplication, stale claims, naming, frontmatter, Markdown-versus-HTML choice, scan length, navigation, and whether the current folder structure still matches the material. Regenerating the index and passing frontmatter validation are necessary checks, not evidence that the editorial audit is complete. Report which documents were inspected, what changed, and why any over-tripwire Markdown files remained Markdown.
+A whole-directory cleanup means an editorial audit, not only index regeneration. Inspect active ownership, duplication, stale status, instruction leakage, format choice, directory density, navigation, and historical material.
 
-## File Formats
+## Markup Choice
 
-Markdown and HTML are interchangeable markup. Choose by reading job, not by quota. A mature directory often ends up with a substantial mix of both because short agent-first notes and compact human-facing views solve different problems.
+Markdown is the default for agent-facing and mixed-use project knowledge. Use it for plans, decisions, research, architecture, status, meeting records, runbooks, and linear human-readable notes.
 
-- Choose Markdown for one linear topic that an agent or human can scan without layout help. Prefer it for short research notes, decisions, meeting records, and prose with at most one small table or checklist.
-- Keep a review checklist in Markdown when the reviewer is expected to edit the file directly, add quote-line comments, and review the resulting Git diff. Split it by topic and keep each file short. Use HTML when the review is primarily read, navigated, compared, filtered, or summarized rather than edited as source.
-- Treat 50 lines as a review tripwire, not an allowance. Keep Markdown shorter when it contains dense links, tables, nested lists, repeated checklist rows, or many headings. Split it or convert it as soon as finding one item requires repeated scrolling.
-- Choose HTML from the start for a human review surface, dashboard, status board, comparison matrix, schedule, dense checklist, multi-column reference, or any document whose meaning benefits from cards, anchored navigation, sticky headings, side-by-side content, filtering, or compact visual hierarchy.
-- Convert Markdown to HTML before it reaches 50 lines when layout would make it materially easier to read. Convert even a short file when repeated structures or a review workflow are awkward in linear prose.
-- Do not convert a long agent-first note merely to hide length. Split it into focused Markdown owners when the content is still linear. HTML is for useful presentation, not a container for an oversized topic.
-- HTML files are self-contained: inline CSS and JS, no external dependencies.
-- Use Mermaid inside markdown whenever a diagram helps: timelines, flows, relationships, schedules. Do not create standalone `.mmd` files, since they cannot carry frontmatter and would be reduced to a description-less asset entry, invisible to selection. A diagram that outgrows Mermaid becomes an HTML page.
-- Images (PNG, SVG, JPG) and PDFs belong in `Context/` too, placed in the topic folder they support. They carry no frontmatter, and the index lists every non-markup file by path without a description.
+HTML is for a deliberately human-facing surface whose value comes from presentation or interaction: dashboards, visual reviews, comparison tools, dense matrices, filterable references, and guided walkthroughs. Do not convert Markdown to HTML merely because it is long.
+
+A long Markdown file should be split when it contains multiple owners, independently changing sections, or a reading path that requires repeated searching. Length alone is not the rule.
+
+Use Mermaid inside Markdown whenever a diagram materially improves a human-facing explanation. Keep diagrams beside the text they explain rather than creating standalone `.mmd` files.
+
+HTML is self-contained with inline CSS and JavaScript and no external dependencies. Images, PDFs, and other assets live beside the document that owns them.
 
 ## Frontmatter
 
-Every markdown and HTML file starts with the same contract. Markdown uses YAML frontmatter:
+Every active Markdown and HTML file begins with:
 
 ```yaml
 ---
 name: <Title Case Document Name>
-description: <one line saying what the file holds and when to read it>
+description: <one line saying what the file holds and when it is useful>
 date_created: YYYY-MM-DD
 date_modified: YYYY-MM-DD
 ---
 ```
 
-HTML has no native frontmatter, so the file starts with the identical block inside an HTML comment:
+HTML places the same fields inside an opening HTML comment.
 
-```html
-<!--
-name: <Title Case Document Name>
-description: <one line saying what the file holds and when to read it>
-date_created: YYYY-MM-DD
-date_modified: YYYY-MM-DD
--->
-```
+Descriptions are selection metadata. They state what the file contains and when it is useful, on one line of at most 1024 characters. The body owns the actual information.
 
-Descriptions are written for a deciding agent: they state what the file holds and when to read it, on one line of at most 1024 characters, high-signal, never the content itself. A rule that lives only in a description is invisible once the file is opened, so descriptions select and bodies inform.
-
-Keep frontmatter in sync: `name` matches the current document name, `description` matches the current purpose, `date_created` never changes, and `date_modified` updates with every content change.
+`name` matches the document, `date_created` never changes, and `date_modified` changes with the content.
 
 ## The Index
 
-`Context/AGENTS.md` holds a managed block listing every file's name, path, modified date, and description, with assets listed by path. The block is generated, guard-delimited, idempotent, and never placed in the host repository's root `AGENTS.md`. Content outside the block is preserved exactly.
-
-Run the generator after any change to `Context/`:
+Run the generator after active Context changes:
 
 ```bash
 node <skill-root>/scripts/index.mjs <path-to-Context>
 ```
 
-It regenerates the block and validates every markup file as it goes: frontmatter present and fully parseable, `name` and `description` set, description within its limits, and both dates real YYYY-MM-DD dates. Deprecated entries render under their own non-guidance heading. Files with broken frontmatter still appear in the index under an unindexed section so they surface instead of vanishing, and the run exits non-zero until they are fixed. The script refuses a target directory not named `Context` unless forced, so the block cannot land in a host repository's root `AGENTS.md` by accident.
+The generated block lists active markup by directory with name, path, and description. It omits historical material and individual assets, validates active frontmatter, preserves authored text outside the guards, and warns when the instruction surface becomes large enough to deserve reorganization.
 
-## Splitting And Organization
+## Naming And Ownership
 
-- Prefer topic subdirectories for files. Root-level markups and assets are allowed but keep them few and overarching: a file earns the root by spanning the whole directory, like a status board or master summary, not by belonging to a topic that simply has no folder yet.
-- One topic per file. Create a new file for each durable topic instead of appending to a large note.
-- Split aggressively when a file covers areas that would naturally live apart, and combine when fragments describe one coherent topic.
-- One owner per fact. Update the owning file and link to it instead of duplicating content that can drift.
-- Before retiring a mixed document, map each unique fact to its intended owner, update inbound links, and verify that no durable information disappeared.
-- Move, rename, and recategorize whenever structure drifts. Prune stale or duplicated material instead of preserving it out of inertia, or move it to `Deprecated/` when it must be kept.
-
-## Naming
-
-- Title Case for folders and markup filenames. Capitalize principal words, lowercase articles and short prepositions unless first or last.
-- Prefix time-anchored artifacts (meetings, snapshots, dated events) with `YYYY-MM-DD ` so they sort chronologically. Evergreen topic files take no date prefix.
-- Keep names descriptive of content, never of temporary process.
+- Use Title Case for folders and markup filenames.
+- Prefix time-anchored records with `YYYY-MM-DD `.
+- Name evergreen files for the subject they own, not the temporary task that created them.
+- Before retiring or splitting a document, map every unique fact, opinion, rationale, and link to its destination.
 
 ## Validation
 
-Before finishing any session that touched `Context/` or drained `Temp-Context/`:
+Before finishing:
 
-- Run the generator (see The Index) and fix every error it reports.
-- Confirm each edited file's frontmatter is in sync (see Frontmatter).
-- Confirm nothing was duplicated that an existing file already owns.
-- Confirm `Temp-Context/` is gone (emptied and removed), not left as an empty folder.
+- Run the generator and fix active frontmatter errors.
+- Confirm edited frontmatter matches the current purpose.
+- Confirm current facts and opinions have one active owner.
+- Confirm agent-wide rules live in `AGENTS.md` and document-specific procedures remain with their subject.
+- Confirm local links and active wiki links resolve.
+- Confirm directory density and large files were reviewed rather than preserved by inertia.
+- Confirm Temp-Context is gone after a drain.

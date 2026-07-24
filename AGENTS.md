@@ -6,31 +6,31 @@ Rules for editing the **context-directory-opinions** skill. User-facing guidance
 
 | File | Role |
 | --- | --- |
-| `SKILL.md` | The Context directory contract: formats, frontmatter, index, organization, naming, Temp-Context drain |
-| `scripts/index.mjs` | Regenerates the managed index block in a Context directory's AGENTS.md and validates frontmatter |
+| `SKILL.md` | Context ownership, organization, markup choice, frontmatter, indexing, Archive, and Temp-Context |
+| `scripts/index.mjs` | Regenerates the compact active index and validates active frontmatter |
 | `README.md` | Short human summary |
-| `AGENTS.md` | Maintenance contract for editing this skill |
-
-One owner per concern. The generated index block lives in each consuming project's `Context/AGENTS.md`, never in this repository.
+| `AGENTS.md` | This maintenance contract |
 
 ## Editing
 
-- Bump `metadata.version` with semver in the same change whenever authored behavior changes. Calibrate one honest bump per checkpoint.
-- Quote every frontmatter string value. Keys stay unquoted.
-- No em dashes, and no semicolons used to join what should be separate sentences. Use commas, periods, parentheses, or "to".
-- Capitalized bullets and parallel list voice.
-- Positive rules. Describe the category of mistake instead of preserving bad examples.
-- Placeholders only. This meta skill must not name real projects, repos, or people beyond its own metadata.
-- Keep `scripts/index.mjs` zero-dependency and runnable with plain `node`. Its output must stay idempotent, and content outside the managed block is never touched.
-- Keep durable project instructions rare, structural, and project-owned. Do not promote one consuming project's folder convention, task status, names, or temporary decisions into this meta skill.
-- Changes to the generated introductory sentence are compatible when the guard strings and replacement boundaries stay unchanged.
-- The guard comments and block format in `scripts/index.mjs` are a compatibility surface. Changing them orphans every existing generated block, so change them only with a major version bump and a migration note.
+- Bump `metadata.version` with semver whenever accepted behavior changes.
+- Quote frontmatter string values and keep bullets capitalized and parallel.
+- Use no em dashes and no prose-joining semicolons.
+- Keep the skill opinionated without repeating one point in several sections.
+- Judge guidance from the reader's real task, audience, and scale.
+- Keep Markdown as the agent-facing default and HTML as an intentional human surface.
+- Encourage meaningful subdirectories before a topic becomes a flat file pile.
+- Keep project knowledge in topical Context and cross-task agent behavior in the applicable `AGENTS.md`.
+- Keep the generator zero-dependency, compact, deterministic, and idempotent.
+- Preserve the managed block guards and authored content outside them.
+- Prefer editorial warnings over new hard gates.
 
 ## Before finishing
 
-- `node scripts/index.mjs --help` and a run against a scratch Context directory both behave.
-- Run the generator twice against the scratch directory and confirm the second run is byte-identical.
-- Every support file named by `SKILL.md` exists and has a direct usage condition.
-- Bullets stay capitalized, with no em dashes and no joiner semicolons introduced.
-- `metadata.version` bumped if and only if authored behavior changed.
-- `README.md` matches the actual file layout.
+- `SKILL.md` and `README.md` describe the same behavior.
+- The version changed if and only if accepted behavior changed.
+- Script syntax, help, scratch generation, Archive exclusion, and two-pass idempotency pass.
+- The index contains active descriptions and no individual assets.
+- Directory-density guidance supports useful depth without creating empty hierarchy.
+- No repeated Archive or Temp-Context explanation bloats the skill.
+- No em dashes or prose-joining semicolons were introduced.
